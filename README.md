@@ -21,6 +21,12 @@ Right-click almost anything on a page and choose the FAAHH context-menu action t
   <img src="fahhh.gif" alt="Demo: right-click menu — FAAHH this element" width="720" />
 </p>
 
+Incase you want an audio demo?
+<p align="center">
+  
+https://github.com/user-attachments/assets/8e3fb148-7ae2-43cd-b4a2-d4c308ed9176
+</p>
+
 Menu labels rotate for variety (for example: *“FAAHH this element (it's gone)”*).
 
 ---
