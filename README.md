@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="fahh-logo.png" alt="FAHHH!" width="480" />
-</p>
-
 # FAHHH Boom
 
 **FAHHH Boom** is a Chrome extension for when a page deserves a little… *dramatic restructuring*. Trigger a full-page FAHHH (sound, shake, and flying debris), or remove a single element via the right-click menu.
@@ -9,7 +5,6 @@
 **Chrome Web Store:** _[listing URL when live]_
 <br>
 <img width="541" height="191" alt="image" src="https://github.com/user-attachments/assets/be77d759-7e3d-4bfc-a4d2-9c7e98499940" />
-
 
 ---
 
