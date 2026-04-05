@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>FAAHH</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div class="wrap">
+      <img class="title-logo" src="Fahh_text.png" alt="FAHHH!" />
+      <p class="tagline" id="tagline">The polite page destructor.</p>
+
+      <label for="intensity" class="label">
+        Chaos coefficient: <span id="intensityValue">6</span>
+      </label>
+      <input id="intensity" type="range" min="1" max="20" step="1" value="6" />
+
+      <button id="pageBoom" type="button">FAAHH THE PAGE</button>
+
+      <p class="hint">
+        Right-click something → context menu → make that one thing regret its life choices.
+      </p>
+
+      <p class="attribution">
+        Made with love by
+        <a
+          href="https://github.com/cosmic-jellyfish"
+          target="_blank"
+          rel="noopener noreferrer"
+          >cosmic-jellyfish</a
+        >.
+      </p>
+    </div>
+
+    <script src="popup.js"></script>
+  </body>
+</html>
