@@ -1,11 +1,11 @@
-const MENU_ID = "faahh-this-element";
+const MENU_ID = "FAHHH-this-element";
 
 const MENU_TITLES = [
-  "FAAHH this element (it's gone)",
-  "FAAHH this element — RIP",
-  "FAAHH: remove one (1) problem",
-  "Yeet this element (FAAHH)",
-  "This element: cancelled (FAAHH)",
+  "FAHHH this element (it's gone)",
+  "FAHHH this element — RIP",
+  "FAHHH: remove one (1) problem",
+  "Yeet this element (FAHHH)",
+  "This element: cancelled (FAHHH)",
 ];
 
 chrome.runtime.onInstalled.addListener(() => {
@@ -17,9 +17,9 @@ chrome.runtime.onInstalled.addListener(() => {
     });
   });
 
-  chrome.storage.local.get(["faahhIntensity"], (data) => {
-    if (typeof data.faahhIntensity !== "number") {
-      chrome.storage.local.set({ faahhIntensity: 6 });
+  chrome.storage.local.get(["FAHHHIntensity"], (data) => {
+    if (typeof data.FAHHHIntensity !== "number") {
+      chrome.storage.local.set({ FAHHHIntensity: 6 });
     }
   });
 });
@@ -29,22 +29,22 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
   if (info.menuItemId !== MENU_ID) return;
 
   chrome.tabs.sendMessage(tab.id, {
-    type: "FAAHH_TARGET_LAST_RIGHT_CLICKED"
+    type: "FAHHH_TARGET_LAST_RIGHT_CLICKED"
   }).catch(() => {});
 });
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-  if (msg.type === "GET_FAAHH_SETTINGS") {
-    chrome.storage.local.get(["faahhIntensity"], (data) => {
+  if (msg.type === "GET_FAHHH_SETTINGS") {
+    chrome.storage.local.get(["FAHHHIntensity"], (data) => {
       sendResponse({
-        intensity: typeof data.faahhIntensity === "number" ? data.faahhIntensity : 6
+        intensity: typeof data.FAHHHIntensity === "number" ? data.FAHHHIntensity : 6
       });
     });
     return true;
   }
 
-  if (msg.type === "SET_FAAHH_INTENSITY") {
-    chrome.storage.local.set({ faahhIntensity: msg.intensity }, () => {
+  if (msg.type === "SET_FAHHH_INTENSITY") {
+    chrome.storage.local.set({ FAHHHIntensity: msg.intensity }, () => {
       sendResponse({ ok: true });
     });
     return true;

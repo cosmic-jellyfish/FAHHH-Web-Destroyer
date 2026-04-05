@@ -2,9 +2,9 @@
   <img src="fahh-logo.png" alt="FAHHH!" width="480" />
 </p>
 
-# Faahh Boom
+# FAHHH Boom
 
-**Faahh Boom** is a Chrome extension for when a page deserves a little… *dramatic restructuring*. Trigger a full-page FAAHH (sound, shake, and flying debris), or remove a single element via the right-click menu.
+**FAHHH Boom** is a Chrome extension for when a page deserves a little… *dramatic restructuring*. Trigger a full-page FAHHH (sound, shake, and flying debris), or remove a single element via the right-click menu.
 
 **Chrome Web Store:** _[listing URL when live]_
 <br>
@@ -15,10 +15,10 @@
 
 ## Targeted removal (right-click)
 
-Right-click almost anything on a page and choose the FAAHH context-menu action to remove **that element only** — no need to nuke the whole tab.
+Right-click almost anything on a page and choose the FAHHH context-menu action to remove **that element only** — no need to nuke the whole tab.
 
 <p align="center">
-  <img src="fahhh.gif" alt="Demo: right-click menu — FAAHH this element" width="720" />
+  <img src="FAHHH.gif" alt="Demo: right-click menu — FAHHH this element" width="720" />
 </p>
 
 Incase you want an audio demo?
@@ -27,13 +27,13 @@ Incase you want an audio demo?
 https://github.com/user-attachments/assets/8e3fb148-7ae2-43cd-b4a2-d4c308ed9176
 </p>
 
-Menu labels rotate for variety (for example: *“FAAHH this element (it's gone)”*).
+Menu labels rotate for variety (for example: *“FAHHH this element (it's gone)”*).
 
 ---
 
-## Full-page FAAHH
+## Full-page FAHHH
 
-Open the extension popup from the toolbar, set the **chaos coefficient**, and hit **FAAHH THE PAGE** for the full experience: FAAHH sound, screen quake, and chunks of the page yeeted until reload (use responsibly).
+Open the extension popup from the toolbar, set the **chaos coefficient**, and hit **FAHHH THE PAGE** for the full experience: FAHHH sound, screen quake, and chunks of the page yeeted until reload (use responsibly).
 
 ---
 

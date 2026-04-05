@@ -22,8 +22,8 @@ async function getCurrentTab() {
   ];
 
   const BUTTON_LABELS = [
-    "FAAHH THE PAGE",
-    "UNLEASH FAAHH",
+    "FAHHH THE PAGE",
+    "UNLEASH FAHHH",
     "EVERYTHING MUST GO",
     "YES, ALL OF IT",
     "COMMIT TO THE BIT",
@@ -49,7 +49,7 @@ async function getCurrentTab() {
   pageBoom.textContent =
     BUTTON_LABELS[Math.floor(Math.random() * BUTTON_LABELS.length)];
   
-  chrome.runtime.sendMessage({ type: "GET_FAAHH_SETTINGS" }, (resp) => {
+  chrome.runtime.sendMessage({ type: "GET_FAHHH_SETTINGS" }, (resp) => {
     const value = resp?.intensity ?? 6;
     slider.value = value;
     intensityValue.textContent = String(value);
@@ -61,7 +61,7 @@ async function getCurrentTab() {
   
   slider.addEventListener("change", () => {
     chrome.runtime.sendMessage({
-      type: "SET_FAAHH_INTENSITY",
+      type: "SET_FAHHH_INTENSITY",
       intensity: Number(slider.value)
     });
   });
@@ -71,7 +71,7 @@ async function getCurrentTab() {
     if (!tab?.id) return;
   
     chrome.tabs.sendMessage(tab.id, {
-      type: "FAAHH_PAGE"
+      type: "FAHHH_PAGE"
     }).catch(() => {});
   
     window.close();

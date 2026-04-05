@@ -1,19 +1,19 @@
-html.faahh-lock-x,
-  html.faahh-lock-x body {
+html.FAHHH-lock-x,
+  html.FAHHH-lock-x body {
     overflow-x: hidden !important;
   }
 
 /* Shake body, not html: transforms on the root break position:fixed layout. */
-  body.faahh-shake {
-    animation: faahh-shake 95ms linear infinite;
+  body.FAHHH-shake {
+    animation: FAHHH-shake 95ms linear infinite;
   }
 
-  body.faahh-shake.faahh-shake--wild {
-    animation-name: faahh-shake-wild;
+  body.FAHHH-shake.FAHHH-shake--wild {
+    animation-name: FAHHH-shake-wild;
     animation-duration: 78ms;
   }
   
-  @keyframes faahh-shake {
+  @keyframes FAHHH-shake {
     0% { transform: translate(0, 0) rotate(0deg); }
     25% { transform: translate(2px, -2px) rotate(-0.3deg); }
     50% { transform: translate(-2px, 1px) rotate(0.3deg); }
@@ -21,7 +21,7 @@ html.faahh-lock-x,
     100% { transform: translate(0, 0) rotate(0deg); }
   }
 
-  @keyframes faahh-shake-wild {
+  @keyframes FAHHH-shake-wild {
     0% { transform: translate(0, 0) rotate(0deg); }
     25% { transform: translate(5px, -4px) rotate(-1deg); }
     50% { transform: translate(-5px, 4px) rotate(1deg); }
@@ -29,10 +29,10 @@ html.faahh-lock-x,
     100% { transform: translate(0, 0) rotate(0deg); }
   }
   
-  .faahh-overlay {
+  .FAHHH-overlay {
     position: fixed;
-    left: var(--faahh-anchor-x);
-    top: var(--faahh-anchor-y);
+    left: var(--FAHHH-anchor-x);
+    top: var(--FAHHH-anchor-y);
     margin: 0;
     max-width: min(96vw, 900px);
     z-index: 2147483647;
@@ -47,26 +47,26 @@ html.faahh-lock-x,
       6px 6px 0 #ff7a00,
       12px 12px 0 #ff2a00,
       18px 18px 0 rgba(0, 0, 0, 0.25);
-    transform: translate(-50%, -50%) rotate(var(--faahh-overlay-rot));
-    animation: faahh-overlay-pop 1100ms ease-out forwards;
+    transform: translate(-50%, -50%) rotate(var(--FAHHH-overlay-rot));
+    animation: FAHHH-overlay-pop 1100ms ease-out forwards;
   }
 
-  @keyframes faahh-overlay-pop {
+  @keyframes FAHHH-overlay-pop {
     0% {
       opacity: 0;
-      transform: translate(-50%, -50%) scale(0.2) rotate(var(--faahh-overlay-rot));
+      transform: translate(-50%, -50%) scale(0.2) rotate(var(--FAHHH-overlay-rot));
     }
     20% {
       opacity: 1;
-      transform: translate(-50%, -50%) scale(1.15) rotate(var(--faahh-overlay-rot));
+      transform: translate(-50%, -50%) scale(1.15) rotate(var(--FAHHH-overlay-rot));
     }
     100% {
       opacity: 0;
-      transform: translate(-50%, -50%) scale(1) translateY(-30px) rotate(var(--faahh-overlay-rot));
+      transform: translate(-50%, -50%) scale(1) translateY(-30px) rotate(var(--FAHHH-overlay-rot));
     }
   }
   
-  .faahh-flash {
+  .FAHHH-flash {
     position: fixed;
     inset: 0;
     z-index: 2147483646;
@@ -77,29 +77,29 @@ html.faahh-lock-x,
         rgba(255,234,120,0.75) 18%,
         rgba(255,136,0,0.28) 42%,
         rgba(255,0,0,0) 72%);
-    animation: faahh-flash 450ms ease-out forwards;
+    animation: FAHHH-flash 450ms ease-out forwards;
   }
   
-  @keyframes faahh-flash {
+  @keyframes FAHHH-flash {
     from { opacity: 1; }
     to { opacity: 0; }
   }
   
-  .faahh-particle {
+  .FAHHH-particle {
     position: fixed;
     z-index: 2147483647;
     font-size: 28px;
     pointer-events: none;
-    animation-name: faahh-particle-fly;
+    animation-name: FAHHH-particle-fly;
     animation-timing-function: ease-out;
     animation-fill-mode: forwards;
   }
 
-  .faahh-particle.faahh-particle--lg {
+  .FAHHH-particle.FAHHH-particle--lg {
     font-size: 44px;
   }
 
-  .faahh-ripple {
+  .FAHHH-ripple {
     position: fixed;
     z-index: 2147483645;
     width: 64px;
@@ -107,23 +107,23 @@ html.faahh-lock-x,
     margin: 0;
     border-radius: 50%;
     pointer-events: none;
-    border: 3px solid hsla(var(--faahh-ring-hue, 45), 92%, 58%, 0.55);
+    border: 3px solid hsla(var(--FAHHH-ring-hue, 45), 92%, 58%, 0.55);
     box-shadow:
-      0 0 16px hsla(var(--faahh-ring-hue, 45), 100%, 52%, 0.35),
-      inset 0 0 12px hsla(var(--faahh-ring-hue, 45), 95%, 70%, 0.2);
+      0 0 16px hsla(var(--FAHHH-ring-hue, 45), 100%, 52%, 0.35),
+      inset 0 0 12px hsla(var(--FAHHH-ring-hue, 45), 95%, 70%, 0.2);
     transform: translate(-50%, -50%) scale(0.28);
     opacity: 0.9;
-    animation: faahh-ripple-expand 900ms cubic-bezier(0.12, 0.85, 0.22, 1) forwards;
+    animation: FAHHH-ripple-expand 900ms cubic-bezier(0.12, 0.85, 0.22, 1) forwards;
   }
 
-  @keyframes faahh-ripple-expand {
+  @keyframes FAHHH-ripple-expand {
     to {
       transform: translate(-50%, -50%) scale(12);
       opacity: 0;
     }
   }
   
-  @keyframes faahh-particle-fly {
+  @keyframes FAHHH-particle-fly {
     from {
       transform: translate(0, 0) rotate(0deg) scale(1);
       opacity: 1;
@@ -134,17 +134,17 @@ html.faahh-lock-x,
     }
   }
   
-  .faahh-ghost {
+  .FAHHH-ghost {
     position: absolute !important;
     margin: 0 !important;
     z-index: 2147483645 !important;
     pointer-events: none !important;
     transform-origin: center center;
-    animation: faahh-ghost-blast 1300ms cubic-bezier(.2,.8,.2,1) forwards;
+    animation: FAHHH-ghost-blast 1300ms cubic-bezier(.2,.8,.2,1) forwards;
     box-shadow: 0 0 30px rgba(255, 120, 0, 0.35);
   }
   
-  @keyframes faahh-ghost-blast {
+  @keyframes FAHHH-ghost-blast {
     0% {
       opacity: 1;
       transform: translate(0, 0) rotate(0deg) scale(1);
@@ -152,19 +152,19 @@ html.faahh-lock-x,
     }
     25% {
       opacity: 1;
-      transform: translate(calc(var(--faahh-x) * 0.25), calc(var(--faahh-y) * 0.25))
-        rotate(calc(var(--faahh-rot) * 0.25))
+      transform: translate(calc(var(--FAHHH-x) * 0.25), calc(var(--FAHHH-y) * 0.25))
+        rotate(calc(var(--FAHHH-rot) * 0.25))
         scale(1.08);
     }
     100% {
       opacity: 0;
-      transform: translate(var(--faahh-x), var(--faahh-y))
-        rotate(var(--faahh-rot))
+      transform: translate(var(--FAHHH-x), var(--FAHHH-y))
+        rotate(var(--FAHHH-rot))
         scale(0.18);
       filter: blur(8px);
     }
   }
   
-  .faahh-destroyed {
+  .FAHHH-destroyed {
     will-change: transform, opacity, filter;
   }

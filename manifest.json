@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
-    "name": "Faahh Boom",
+    "name": "FAHHH Boom",
     "version": "2.1.0",
-    "description": "FAAHH sound, screen shake, and page chunks gone until reload. Use responsibly (don't).",
+    "description": "FAHHH sound, screen shake, and page chunks gone until reload. Use responsibly (don't).",
     "permissions": ["activeTab", "storage", "contextMenus"],
     "background": {
       "service_worker": "background.js"
@@ -14,7 +14,7 @@
       "128": "fahh-logo.png"
     },
     "action": {
-      "default_title": "FAAHH — click for feelings",
+      "default_title": "FAHHH — click for feelings",
       "default_popup": "popup.html",
       "default_icon": {
         "16": "fahh-logo.png",
@@ -33,7 +33,7 @@
     ],
     "web_accessible_resources": [
       {
-        "resources": ["fahhh.mp3"],
+        "resources": ["FAHHH.mp3"],
         "matches": ["<all_urls>"]
       }
     ]

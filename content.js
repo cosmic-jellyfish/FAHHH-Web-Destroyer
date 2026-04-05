@@ -3,33 +3,33 @@
     let lastRightClickedElement = null;
     let lastContextMenuPoint = null;
     let overlayCounter = 0;
-    let lastFaahhAt = 0;
-    const FAAHH_DEBOUNCE_MS = 480;
+    let lastFAHHHAt = 0;
+    const FAHHH_DEBOUNCE_MS = 480;
 
-    function tryBeginFaahh() {
+    function tryBeginFAHHH() {
       const t = Date.now();
-      if (t - lastFaahhAt < FAAHH_DEBOUNCE_MS) return false;
-      lastFaahhAt = t;
+      if (t - lastFAHHHAt < FAHHH_DEBOUNCE_MS) return false;
+      lastFAHHHAt = t;
       return true;
     }
 
-    function applyFaahhShake(intensity) {
+    function applyFAHHHShake(intensity) {
       const host = document.body;
       if (!host) return;
-      host.classList.add("faahh-shake");
+      host.classList.add("FAHHH-shake");
       if (intensity >= 15) {
-        host.classList.add("faahh-shake--wild");
+        host.classList.add("FAHHH-shake--wild");
       }
     }
 
-    function clearFaahhShake() {
+    function clearFAHHHShake() {
       const a = document.body;
       const b = document.documentElement;
       if (a) {
-        a.classList.remove("faahh-shake", "faahh-shake--wild");
+        a.classList.remove("FAHHH-shake", "FAHHH-shake--wild");
       }
       if (b && b !== a) {
-        b.classList.remove("faahh-shake", "faahh-shake--wild");
+        b.classList.remove("FAHHH-shake", "FAHHH-shake--wild");
       }
     }
   
@@ -42,18 +42,18 @@
     }, true);
   
     chrome.runtime.onMessage.addListener((msg) => {
-      if (msg.type === "FAAHH_PAGE") {
-        faahhPage();
+      if (msg.type === "FAHHH_PAGE") {
+        FAHHHPage();
       }
   
-      if (msg.type === "FAAHH_TARGET_LAST_RIGHT_CLICKED") {
-        faahhSpecificElement(lastRightClickedElement);
+      if (msg.type === "FAHHH_TARGET_LAST_RIGHT_CLICKED") {
+        FAHHHSpecificElement(lastRightClickedElement);
       }
     });
   
     function getIntensity() {
       return new Promise((resolve) => {
-        chrome.runtime.sendMessage({ type: "GET_FAAHH_SETTINGS" }, (resp) => {
+        chrome.runtime.sendMessage({ type: "GET_FAHHH_SETTINGS" }, (resp) => {
           resolve(resp?.intensity ?? 6);
         });
       });
@@ -97,8 +97,8 @@
       setTimeout(restore, 400);
     }
 
-    async function faahhPage() {
-      if (pageRunning || !tryBeginFaahh()) return;
+    async function FAHHHPage() {
+      if (pageRunning || !tryBeginFAHHH()) return;
       pageRunning = true;
 
       const intensity = await getIntensity();
@@ -109,14 +109,14 @@
       blastElements(targets, intensity);
 
       setTimeout(() => {
-        clearFaahhShake();
-        document.documentElement.classList.remove("faahh-lock-x");
+        clearFAHHHShake();
+        document.documentElement.classList.remove("FAHHH-lock-x");
         pageRunning = false;
       }, 1800);
     }
 
-    async function faahhSpecificElement(el) {
-      if (!tryBeginFaahh()) return;
+    async function FAHHHSpecificElement(el) {
+      if (!tryBeginFAHHH()) return;
 
       const intensity = await getIntensity();
       let overlayAnchor = getOverlayAnchorRect(el);
@@ -145,8 +145,8 @@
       }
 
       setTimeout(() => {
-        clearFaahhShake();
-        document.documentElement.classList.remove("faahh-lock-x");
+        clearFAHHHShake();
+        document.documentElement.classList.remove("FAHHH-lock-x");
       }, 1800);
     }
 
@@ -164,8 +164,8 @@
       );
 
       if (!fromContextMenu) {
-        document.documentElement.classList.add("faahh-lock-x");
-        applyFaahhShake(intensity);
+        document.documentElement.classList.add("FAHHH-lock-x");
+        applyFAHHHShake(intensity);
       }
       if (fromContextMenu) {
         preserveScrollForContextMenuYeet();
@@ -174,14 +174,14 @@
   
     function playSound(jackpot, fromContextMenu) {
       try {
-        const audio = new Audio(chrome.runtime.getURL("fahhh.mp3"));
+        const audio = new Audio(chrome.runtime.getURL("FAHHH.mp3"));
         audio.volume = jackpot ? 1 : 0.95;
         audio.playbackRate = rand(88, 112) / 100;
         audio.play().catch(() => {});
         if (jackpot && !fromContextMenu) {
           setTimeout(() => {
             try {
-              const echo = new Audio(chrome.runtime.getURL("fahhh.mp3"));
+              const echo = new Audio(chrome.runtime.getURL("FAHHH.mp3"));
               echo.volume = 0.35;
               echo.playbackRate = rand(92, 108) / 100;
               echo.play().catch(() => {});
@@ -196,9 +196,9 @@
     function showOverlay(anchorRect) {
       overlayCounter += 1;
       const overlay = document.createElement("div");
-      overlay.className = "faahh-overlay";
-      overlay.textContent = "FAAHH";
-      overlay.style.setProperty("--faahh-overlay-rot", `${rand(-12, 12)}deg`);
+      overlay.className = "FAHHH-overlay";
+      overlay.textContent = "FAHHH";
+      overlay.style.setProperty("--FAHHH-overlay-rot", `${rand(-12, 12)}deg`);
 
       const vw = window.innerWidth;
       const vh = window.innerHeight;
@@ -213,10 +213,10 @@
         leftPx = rand(Math.floor(vw * 0.08), Math.floor(vw * 0.92));
         topPx = rand(Math.floor(vh * 0.08), Math.floor(vh * 0.82));
       }
-      overlay.style.setProperty("--faahh-anchor-x", `${leftPx}px`);
-      overlay.style.setProperty("--faahh-anchor-y", `${topPx}px`);
+      overlay.style.setProperty("--FAHHH-anchor-x", `${leftPx}px`);
+      overlay.style.setProperty("--FAHHH-anchor-y", `${topPx}px`);
 
-      overlay.dataset.faahhOverlayId = String(overlayCounter);
+      overlay.dataset.FAHHHOverlayId = String(overlayCounter);
 
       document.documentElement.appendChild(overlay);
       setTimeout(() => overlay.remove(), 1200);
@@ -251,12 +251,12 @@
       if (el === document.body || el === document.documentElement) return false;
       if (
         el.closest(
-          ".faahh-overlay, .faahh-flash, .faahh-particle, .faahh-ripple, .faahh-ghost"
+          ".FAHHH-overlay, .FAHHH-flash, .FAHHH-particle, .FAHHH-ripple, .FAHHH-ghost"
         )
       ) {
         return false;
       }
-      if (el.dataset.faahhDestroyed === "1") return false;
+      if (el.dataset.FAHHHDestroyed === "1") return false;
 
       const rect = el.getBoundingClientRect();
       const style = getComputedStyle(el);
@@ -388,20 +388,20 @@
     function blastElements(targets, intensity, focused = false) {
       targets.forEach((el, i) => {
         if (!el || !el.isConnected) return;
-        if (el.dataset.faahhDestroyed === "1") return;
+        if (el.dataset.FAHHHDestroyed === "1") return;
   
         const rect = el.getBoundingClientRect();
   
         const clone = el.cloneNode(true);
-        clone.classList.add("faahh-ghost");
+        clone.classList.add("FAHHH-ghost");
         clone.style.width = `${rect.width}px`;
         clone.style.height = `${rect.height}px`;
         clone.style.left = `${rect.left + window.scrollX}px`;
         clone.style.top = `${rect.top + window.scrollY}px`;
-        clone.style.setProperty("--faahh-x", `${rand(-700, 700)}px`);
-        clone.style.setProperty("--faahh-y", `${rand(-500, -80)}px`);
-        clone.style.setProperty("--faahh-rot", `${rand(-80, 80)}deg`);
-        clone.style.setProperty("--faahh-delay", `${i * 35}ms`);
+        clone.style.setProperty("--FAHHH-x", `${rand(-700, 700)}px`);
+        clone.style.setProperty("--FAHHH-y", `${rand(-500, -80)}px`);
+        clone.style.setProperty("--FAHHH-rot", `${rand(-80, 80)}deg`);
+        clone.style.setProperty("--FAHHH-delay", `${i * 35}ms`);
   
         document.body.appendChild(clone);
   
@@ -416,8 +416,8 @@
       setTimeout(() => {
         if (!el.isConnected) return;
   
-        el.dataset.faahhDestroyed = "1";
-        el.classList.add("faahh-destroyed");
+        el.dataset.FAHHHDestroyed = "1";
+        el.classList.add("FAHHH-destroyed");
   
         const parent = el.parentElement;
         if (!parent) return;
@@ -494,9 +494,9 @@
       ];
       for (let i = 0; i < count; i++) {
         const p = document.createElement("div");
-        p.className = "faahh-particle";
+        p.className = "FAHHH-particle";
         if (Math.random() < 0.12) {
-          p.classList.add("faahh-particle--lg");
+          p.classList.add("FAHHH-particle--lg");
         }
         p.textContent = bits[Math.floor(Math.random() * bits.length)];
         p.style.left = `${cx + rand(-20, 20)}px`;
@@ -512,7 +512,7 @@
   
     function spawnFlash(anchorRect, fromContextMenu) {
       const flash = document.createElement("div");
-      flash.className = "faahh-flash";
+      flash.className = "FAHHH-flash";
       const hue = rand(0, 360);
       const hue2 = (hue + rand(35, 95)) % 360;
       const vw = window.innerWidth;
@@ -564,11 +564,11 @@
       }
       for (let i = 0; i < n; i++) {
         const ring = document.createElement("div");
-        ring.className = "faahh-ripple";
+        ring.className = "FAHHH-ripple";
         ring.style.left = `${Math.max(4, Math.min(96, baseLeftPct + rand(-8, 8)))}%`;
         ring.style.top = `${Math.max(4, Math.min(96, baseTopPct + rand(-8, 8)))}%`;
         ring.style.animationDelay = `${i * 90}ms`;
-        ring.style.setProperty("--faahh-ring-hue", String(rand(0, 360)));
+        ring.style.setProperty("--FAHHH-ring-hue", String(rand(0, 360)));
         document.documentElement.appendChild(ring);
         setTimeout(() => ring.remove(), 1100);
       }
@@ -609,9 +609,9 @@
       const vh = window.innerHeight;
       for (let i = 0; i < count; i++) {
         const p = document.createElement("div");
-        p.className = "faahh-particle";
+        p.className = "FAHHH-particle";
         if (Math.random() < 0.1) {
-          p.classList.add("faahh-particle--lg");
+          p.classList.add("FAHHH-particle--lg");
         }
         p.textContent = emojis[Math.floor(Math.random() * emojis.length)];
         let lx;
