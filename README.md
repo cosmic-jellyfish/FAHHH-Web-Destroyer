@@ -18,7 +18,7 @@
 Right-click almost anything on a page and choose the FAHHH context-menu action to remove **that element only** — no need to nuke the whole tab.
 
 <p align="center">
-  <img src="FAHHH.gif" alt="Demo: right-click menu — FAHHH this element" width="720" />
+  <img src="fahhh.gif" alt="Demo: right-click menu — FAHHH this element" width="720" />
 </p>
 
 Incase you want an audio demo?
