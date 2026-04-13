@@ -1,6 +1,6 @@
 # FAHHH Boom
 
-**FAHHH Boom** is a Chrome extension for when a page deserves a little… *dramatic restructuring*. Trigger a full-page FAHHH (sound, shake, and flying debris), or remove a single element via the right-click menu.
+**FAHHH Boom** is a Chrome extension for when a page deserves a little… *dramatic restructuring*. Remove what you choose: use the **right-click** context menu on one element, or **Pick on page** from the toolbar popup to select targets and FAHHH them with sound, flash, and flying debris (until reload).
 
 **Chrome Web Store:** _[listing URL when live]_
 <br>
@@ -26,9 +26,11 @@ Menu labels rotate for variety (for example: *“FAHHH this element (it's gone)�
 
 ---
 
-## Full-page FAHHH
-
-Open the extension popup from the toolbar and hit **FAHHH THE PAGE** for the full experience: FAHHH sound, screen quake, and chunks of the page yeeted until reload (use responsibly). You can also use **Pick on page…** to select one or more elements, then press Enter to FAHHH only those.
+## Pick on page (toolbar popup)
+<p align="center">
+  <img src="elementpicker.gif" alt="Demo: Click the extension - Pick Element" width="720" />
+</p>
+Open the popup and choose **Pick on page…**. The tab gets a crosshair: click elements to toggle them in the selection, then **Enter** to FAHHH those nodes (or **Esc** to cancel).
 
 ---
 
@@ -48,4 +50,4 @@ Declared in `manifest.json`: **activeTab** (toolbar popup talks to the current t
 
 ## Version
 
-Current version in `manifest.json`: **2.3.0**.
+Current version in `manifest.json`: **2.4.0**.

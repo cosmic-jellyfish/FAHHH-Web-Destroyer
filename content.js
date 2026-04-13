@@ -1,5 +1,4 @@
 (() => {
-    let pageRunning = false;
     let lastRightClickedElement = null;
     let lastContextMenuPoint = null;
     let overlayCounter = 0;
@@ -54,10 +53,6 @@
     }, true);
   
     chrome.runtime.onMessage.addListener((msg) => {
-      if (msg.type === "FAHHH_PAGE") {
-        FAHHHPage();
-      }
-  
       if (msg.type === "FAHHH_TARGET_LAST_RIGHT_CLICKED") {
         FAHHHSpecificElement(lastRightClickedElement);
       }
@@ -103,24 +98,6 @@
       setTimeout(restore, 50);
       setTimeout(restore, 120);
       setTimeout(restore, 400);
-    }
-
-    function FAHHHPage() {
-      if (pageRunning || !tryBeginFAHHH()) return;
-      pageRunning = true;
-
-      const intensity = FAHHH_INTENSITY;
-
-      doGlobalEffects(intensity, null, false);
-
-      const targets = getPageTargets(intensity);
-      blastElements(targets, intensity);
-
-      setTimeout(() => {
-        clearFAHHHShake();
-        document.documentElement.classList.remove("FAHHH-lock-x");
-        pageRunning = false;
-      }, 1800);
     }
 
     function FAHHHSpecificElement(el) {

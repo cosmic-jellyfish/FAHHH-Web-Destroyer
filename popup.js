@@ -21,42 +21,12 @@ async function getCurrentTab() {
     "Minimalism, but loud.",
   ];
 
-  const BUTTON_LABELS = [
-    "FAHHH THE PAGE",
-    "UNLEASH FAHHH",
-    "EVERYTHING MUST GO",
-    "YES, ALL OF IT",
-    "COMMIT TO THE BIT",
-    "SEND IT",
-    "DO THE THING",
-    "BIG RED BUTTON ENERGY",
-    "OKAY FINE",
-    "LET'S GO",
-    "ABSOLUTELY NOT CALM",
-    "OPEN THE FLOODGATES",
-    "FOR SCIENCE",
-  ];
-
-  const pageBoom = document.getElementById("pageBoom");
   const taglineEl = document.getElementById("tagline");
 
   if (taglineEl) {
     taglineEl.textContent =
       TAGLINES[Math.floor(Math.random() * TAGLINES.length)];
   }
-  pageBoom.textContent =
-    BUTTON_LABELS[Math.floor(Math.random() * BUTTON_LABELS.length)];
-
-  pageBoom.addEventListener("click", async () => {
-    const tab = await getCurrentTab();
-    if (!tab?.id) return;
-  
-    chrome.tabs.sendMessage(tab.id, {
-      type: "FAHHH_PAGE"
-    }).catch(() => {});
-  
-    window.close();
-  });
 
   const pickElements = document.getElementById("pickElements");
   if (pickElements) {
