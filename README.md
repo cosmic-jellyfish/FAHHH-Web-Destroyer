@@ -33,7 +33,7 @@ Menu labels rotate for variety (for example: *“FAHHH this element (it's gone)�
 
 ## Full-page FAHHH
 
-Open the extension popup from the toolbar, set the **chaos coefficient**, and hit **FAHHH THE PAGE** for the full experience: FAHHH sound, screen quake, and chunks of the page yeeted until reload (use responsibly).
+Open the extension popup from the toolbar and hit **FAHHH THE PAGE** for the full experience: FAHHH sound, screen quake, and chunks of the page yeeted until reload (use responsibly). You can also use **Pick on page…** to select one or more elements, then press Enter to FAHHH only those.
 
 ---
 
@@ -47,10 +47,10 @@ Open the extension popup from the toolbar, set the **chaos coefficient**, and hi
 
 ## Permissions (summary)
 
-Declared in `manifest.json`: **activeTab** (toolbar popup talks to the current tab), **storage** (saves your chaos slider locally), **contextMenus** (right-click entry). Content scripts use `<all_urls>` so effects can run on sites you use — there is no separate `host_permissions` or `scripting` permission; nothing is sent to a server.
+Declared in `manifest.json`: **activeTab** (toolbar popup talks to the current tab), **contextMenus** (right-click entry). Content scripts use `<all_urls>` so effects can run on sites you use — there is no separate `host_permissions` or `scripting` permission; nothing is sent to a server.
 
 ---
 
 ## Version
 
-Current version in `manifest.json`: **2.1.0**.
+Current version in `manifest.json`: **2.3.0**.

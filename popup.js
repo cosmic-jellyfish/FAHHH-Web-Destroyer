@@ -33,12 +33,10 @@ async function getCurrentTab() {
     "OKAY FINE",
     "LET'S GO",
     "ABSOLUTELY NOT CALM",
-    "DEPLOY CHAOS",
+    "OPEN THE FLOODGATES",
     "FOR SCIENCE",
   ];
 
-  const slider = document.getElementById("intensity");
-  const intensityValue = document.getElementById("intensityValue");
   const pageBoom = document.getElementById("pageBoom");
   const taglineEl = document.getElementById("tagline");
 
@@ -48,24 +46,7 @@ async function getCurrentTab() {
   }
   pageBoom.textContent =
     BUTTON_LABELS[Math.floor(Math.random() * BUTTON_LABELS.length)];
-  
-  chrome.runtime.sendMessage({ type: "GET_FAHHH_SETTINGS" }, (resp) => {
-    const value = resp?.intensity ?? 6;
-    slider.value = value;
-    intensityValue.textContent = String(value);
-  });
-  
-  slider.addEventListener("input", () => {
-    intensityValue.textContent = slider.value;
-  });
-  
-  slider.addEventListener("change", () => {
-    chrome.runtime.sendMessage({
-      type: "SET_FAHHH_INTENSITY",
-      intensity: Number(slider.value)
-    });
-  });
-  
+
   pageBoom.addEventListener("click", async () => {
     const tab = await getCurrentTab();
     if (!tab?.id) return;
@@ -76,3 +57,15 @@ async function getCurrentTab() {
   
     window.close();
   });
+
+  const pickElements = document.getElementById("pickElements");
+  if (pickElements) {
+    pickElements.addEventListener("click", async () => {
+      const tab = await getCurrentTab();
+      if (!tab?.id) return;
+
+      chrome.tabs.sendMessage(tab.id, { type: "START_ELEMENT_PICKER" }).catch(() => {});
+
+      window.close();
+    });
+  }

@@ -16,12 +16,6 @@ chrome.runtime.onInstalled.addListener(() => {
       contexts: ["all"]
     });
   });
-
-  chrome.storage.local.get(["FAHHHIntensity"], (data) => {
-    if (typeof data.FAHHHIntensity !== "number") {
-      chrome.storage.local.set({ FAHHHIntensity: 6 });
-    }
-  });
 });
 
 chrome.contextMenus.onClicked.addListener(async (info, tab) => {
@@ -31,22 +25,4 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
   chrome.tabs.sendMessage(tab.id, {
     type: "FAHHH_TARGET_LAST_RIGHT_CLICKED"
   }).catch(() => {});
-});
-
-chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-  if (msg.type === "GET_FAHHH_SETTINGS") {
-    chrome.storage.local.get(["FAHHHIntensity"], (data) => {
-      sendResponse({
-        intensity: typeof data.FAHHHIntensity === "number" ? data.FAHHHIntensity : 6
-      });
-    });
-    return true;
-  }
-
-  if (msg.type === "SET_FAHHH_INTENSITY") {
-    chrome.storage.local.set({ FAHHHIntensity: msg.intensity }, () => {
-      sendResponse({ ok: true });
-    });
-    return true;
-  }
 });

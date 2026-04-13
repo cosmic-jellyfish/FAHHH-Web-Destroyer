@@ -168,3 +168,55 @@ html.FAHHH-lock-x,
   .FAHHH-destroyed {
     will-change: transform, opacity, filter;
   }
+
+  html.FAHHH-picker-cursor,
+  html.FAHHH-picker-cursor body {
+    cursor: crosshair !important;
+  }
+
+  .FAHHH-picker-hover {
+    outline: 2px dashed #ffb84d !important;
+    outline-offset: 2px !important;
+  }
+
+  .FAHHH-picker-selected {
+    outline: 3px solid #5cff5c !important;
+    outline-offset: 2px !important;
+  }
+
+  .FAHHH-picker-ui.FAHHH-picker-bar {
+    position: fixed;
+    left: 50%;
+    bottom: 16px;
+    transform: translateX(-50%);
+    z-index: 2147483640;
+    max-width: min(96vw, 520px);
+    padding: 10px 14px;
+    border-radius: 12px;
+    background: rgba(17, 17, 17, 0.92);
+    color: #fff;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    line-height: 1.35;
+    box-shadow:
+      0 4px 24px rgba(0, 0, 0, 0.45),
+      0 0 0 1px rgba(255, 184, 77, 0.35);
+    pointer-events: none;
+  }
+
+  .FAHHH-picker-bar-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    text-align: center;
+  }
+
+  .FAHHH-picker-count {
+    font-weight: 800;
+    color: #ffb84d;
+  }
+
+  .FAHHH-picker-keys {
+    font-size: 11px;
+    opacity: 0.88;
+  }

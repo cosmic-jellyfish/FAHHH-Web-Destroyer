@@ -5,6 +5,18 @@
     let overlayCounter = 0;
     let lastFAHHHAt = 0;
     const FAHHH_DEBOUNCE_MS = 480;
+    const FAHHH_INTENSITY = 6;
+
+    let pickerActive = false;
+    let pickerHoveredEl = null;
+    let pickerSelected = [];
+    let pickerBarEl = null;
+    let pickerOnMove = null;
+    let pickerOnClick = null;
+    let pickerOnKey = null;
+
+    const PICKER_HOVER_CLASS = "FAHHH-picker-hover";
+    const PICKER_SELECTED_CLASS = "FAHHH-picker-selected";
 
     function tryBeginFAHHH() {
       const t = Date.now();
@@ -49,15 +61,11 @@
       if (msg.type === "FAHHH_TARGET_LAST_RIGHT_CLICKED") {
         FAHHHSpecificElement(lastRightClickedElement);
       }
+
+      if (msg.type === "START_ELEMENT_PICKER") {
+        startElementPicker();
+      }
     });
-  
-    function getIntensity() {
-      return new Promise((resolve) => {
-        chrome.runtime.sendMessage({ type: "GET_FAHHH_SETTINGS" }, (resp) => {
-          resolve(resp?.intensity ?? 6);
-        });
-      });
-    }
   
     function getOverlayAnchorRect(el) {
       if (!el || !el.isConnected) return null;
@@ -97,11 +105,11 @@
       setTimeout(restore, 400);
     }
 
-    async function FAHHHPage() {
+    function FAHHHPage() {
       if (pageRunning || !tryBeginFAHHH()) return;
       pageRunning = true;
 
-      const intensity = await getIntensity();
+      const intensity = FAHHH_INTENSITY;
 
       doGlobalEffects(intensity, null, false);
 
@@ -115,10 +123,10 @@
       }, 1800);
     }
 
-    async function FAHHHSpecificElement(el) {
+    function FAHHHSpecificElement(el) {
       if (!tryBeginFAHHH()) return;
 
-      const intensity = await getIntensity();
+      const intensity = FAHHH_INTENSITY;
       let overlayAnchor = getOverlayAnchorRect(el);
       if (!overlayAnchor && lastContextMenuPoint) {
         overlayAnchor = rectAroundPoint(lastContextMenuPoint.x, lastContextMenuPoint.y);
@@ -143,6 +151,61 @@
         );
         blastElements([el], intensity, true);
       }
+
+      setTimeout(() => {
+        clearFAHHHShake();
+        document.documentElement.classList.remove("FAHHH-lock-x");
+      }, 1800);
+    }
+
+    function unionClientRects(rects) {
+      if (!rects.length) return null;
+      let left = Infinity;
+      let top = Infinity;
+      let right = -Infinity;
+      let bottom = -Infinity;
+      for (const r of rects) {
+        if (!r || r.width < 2 || r.height < 2) continue;
+        left = Math.min(left, r.left);
+        top = Math.min(top, r.top);
+        right = Math.max(right, r.right);
+        bottom = Math.max(bottom, r.bottom);
+      }
+      if (!Number.isFinite(left)) return null;
+      return {
+        left,
+        top,
+        right,
+        bottom,
+        width: right - left,
+        height: bottom - top
+      };
+    }
+
+    function FAHHHSelectedElements(elements) {
+      const unique = [];
+      const seen = new Set();
+      for (const el of elements) {
+        if (!el || !el.isConnected || seen.has(el)) continue;
+        seen.add(el);
+        unique.push(el);
+      }
+      if (unique.length === 0) return;
+      if (!tryBeginFAHHH()) return;
+
+      const intensity = FAHHH_INTENSITY;
+      const rects = unique.map(getOverlayAnchorRect).filter(Boolean);
+      let overlayAnchor = unionClientRects(rects);
+      if (!overlayAnchor) {
+        overlayAnchor = getOverlayAnchorRect(unique[0]);
+      }
+
+      doGlobalEffects(
+        Math.max(3, Math.floor(intensity / 2)),
+        overlayAnchor,
+        true
+      );
+      blastElements(unique, intensity, true);
 
       setTimeout(() => {
         clearFAHHHShake();
@@ -251,7 +314,7 @@
       if (el === document.body || el === document.documentElement) return false;
       if (
         el.closest(
-          ".FAHHH-overlay, .FAHHH-flash, .FAHHH-particle, .FAHHH-ripple, .FAHHH-ghost"
+          ".FAHHH-overlay, .FAHHH-flash, .FAHHH-particle, .FAHHH-ripple, .FAHHH-ghost, .FAHHH-picker-ui"
         )
       ) {
         return false;
@@ -281,7 +344,7 @@
     }
 
     // Deepest element under the cursor (shadow-aware), excluding near-fullscreen nodes.
-    function findBlastableForContextMenu(event) {
+    function buildContextMenuElementChain(event) {
       const px = event.clientX;
       const py = event.clientY;
 
@@ -312,7 +375,6 @@
             prefix.push(el);
             el = el.parentElement;
           }
-          // Walk from elementFromPoint first so innermost wins; don't seed `seen` from composedPath alone.
           const merged = [];
           const seen = new Set();
           for (const e of prefix) {
@@ -346,6 +408,37 @@
         }
       }
 
+      return chain;
+    }
+
+    function buildPickerElementChain(px, py) {
+      let stack = [];
+      try {
+        stack = document.elementsFromPoint(px, py) || [];
+      } catch (_) {}
+
+      let start = null;
+      for (const n of stack) {
+        if (!n || n.nodeType !== Node.ELEMENT_NODE) continue;
+        if (typeof n.closest === "function" && n.closest(".FAHHH-picker-ui")) {
+          continue;
+        }
+        start = n;
+        break;
+      }
+
+      if (!start) return [];
+
+      const prefix = [];
+      let el = start;
+      while (el && el !== document.body && el !== document.documentElement) {
+        prefix.push(el);
+        el = el.parentElement;
+      }
+      return prefix;
+    }
+
+    function selectBlastableFromChain(chain, px, py) {
       const opts = { forContextMenu: true };
       const vw = window.innerWidth;
       const vh = window.innerHeight;
@@ -384,7 +477,161 @@
       blastable.sort((a, b) => a.area - b.area);
       return blastable[0].el;
     }
-  
+
+    function findBlastableForContextMenu(event) {
+      return selectBlastableFromChain(
+        buildContextMenuElementChain(event),
+        event.clientX,
+        event.clientY
+      );
+    }
+
+    function findBlastableForPickerPoint(px, py) {
+      return selectBlastableFromChain(buildPickerElementChain(px, py), px, py);
+    }
+
+    function ensurePickerBar() {
+      if (pickerBarEl && pickerBarEl.isConnected) return pickerBarEl;
+      const bar = document.createElement("div");
+      bar.className = "FAHHH-picker-ui FAHHH-picker-bar";
+      const inner = document.createElement("div");
+      inner.className = "FAHHH-picker-bar-inner";
+      const count = document.createElement("span");
+      count.className = "FAHHH-picker-count";
+      count.textContent = "0 selected — click elements";
+      const keys = document.createElement("span");
+      keys.className = "FAHHH-picker-keys";
+      keys.textContent =
+        "Enter → FAHHH selection · Esc → cancel · click again to unselect";
+      inner.appendChild(count);
+      inner.appendChild(keys);
+      bar.appendChild(inner);
+      document.documentElement.appendChild(bar);
+      pickerBarEl = bar;
+      return bar;
+    }
+
+    function updatePickerBarLabel() {
+      if (!pickerBarEl) return;
+      const span = pickerBarEl.querySelector(".FAHHH-picker-count");
+      if (!span) return;
+      const n = pickerSelected.length;
+      span.textContent =
+        n === 0 ? "0 selected — click elements" : `${n} selected — Enter to FAHHH`;
+    }
+
+    function setPickerHover(el) {
+      if (pickerHoveredEl) {
+        pickerHoveredEl.classList.remove(PICKER_HOVER_CLASS);
+      }
+      pickerHoveredEl = el;
+      if (
+        pickerHoveredEl &&
+        !pickerSelected.includes(pickerHoveredEl)
+      ) {
+        pickerHoveredEl.classList.add(PICKER_HOVER_CLASS);
+      }
+    }
+
+    function stopPickerListeners() {
+      if (pickerOnMove) {
+        window.removeEventListener("mousemove", pickerOnMove, true);
+        pickerOnMove = null;
+      }
+      if (pickerOnClick) {
+        window.removeEventListener("click", pickerOnClick, true);
+        pickerOnClick = null;
+      }
+      if (pickerOnKey) {
+        window.removeEventListener("keydown", pickerOnKey, true);
+        pickerOnKey = null;
+      }
+    }
+
+    function cancelElementPicker() {
+      if (!pickerActive) return;
+      pickerActive = false;
+      document.documentElement.classList.remove("FAHHH-picker-cursor");
+      for (const el of pickerSelected) {
+        if (el && el.classList) el.classList.remove(PICKER_SELECTED_CLASS);
+      }
+      pickerSelected = [];
+      setPickerHover(null);
+      if (pickerBarEl) {
+        pickerBarEl.remove();
+        pickerBarEl = null;
+      }
+      stopPickerListeners();
+    }
+
+    function confirmElementPicker() {
+      if (!pickerActive) return;
+      const els = pickerSelected.slice();
+      cancelElementPicker();
+      if (els.length === 0) return;
+      FAHHHSelectedElements(els);
+    }
+
+    function startElementPicker() {
+      if (pickerActive) {
+        cancelElementPicker();
+      }
+      pickerActive = true;
+      pickerSelected = [];
+      pickerHoveredEl = null;
+      document.documentElement.classList.add("FAHHH-picker-cursor");
+      ensurePickerBar();
+      updatePickerBarLabel();
+
+      pickerOnMove = (e) => {
+        if (!pickerActive) return;
+        const t = e.target;
+        if (t && typeof t.closest === "function" && t.closest(".FAHHH-picker-ui")) {
+          setPickerHover(null);
+          return;
+        }
+        const el = findBlastableForPickerPoint(e.clientX, e.clientY);
+        setPickerHover(el);
+      };
+
+      pickerOnClick = (e) => {
+        if (!pickerActive) return;
+        if (e.button !== 0) return;
+        const t = e.target;
+        if (t && typeof t.closest === "function" && t.closest(".FAHHH-picker-ui")) {
+          return;
+        }
+        e.preventDefault();
+        e.stopPropagation();
+        const el = findBlastableForPickerPoint(e.clientX, e.clientY);
+        if (!el) return;
+        const idx = pickerSelected.indexOf(el);
+        if (idx >= 0) {
+          el.classList.remove(PICKER_SELECTED_CLASS);
+          pickerSelected.splice(idx, 1);
+        } else {
+          el.classList.add(PICKER_SELECTED_CLASS);
+          pickerSelected.push(el);
+        }
+        updatePickerBarLabel();
+      };
+
+      pickerOnKey = (e) => {
+        if (!pickerActive) return;
+        if (e.key === "Escape") {
+          e.preventDefault();
+          cancelElementPicker();
+        } else if (e.key === "Enter") {
+          e.preventDefault();
+          confirmElementPicker();
+        }
+      };
+
+      window.addEventListener("mousemove", pickerOnMove, true);
+      window.addEventListener("click", pickerOnClick, true);
+      window.addEventListener("keydown", pickerOnKey, true);
+    }
+
     function blastElements(targets, intensity, focused = false) {
       targets.forEach((el, i) => {
         if (!el || !el.isConnected) return;

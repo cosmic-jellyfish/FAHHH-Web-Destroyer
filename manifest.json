@@ -1,9 +1,9 @@
 {
     "manifest_version": 3,
     "name": "FAHHH Boom",
-    "version": "2.1.0",
+    "version": "2.3.0",
     "description": "FAHHH sound, screen shake, and page chunks gone until reload. Use responsibly (don't).",
-    "permissions": ["activeTab", "storage", "contextMenus"],
+    "permissions": ["activeTab", "contextMenus"],
     "background": {
       "service_worker": "background.js"
     },
