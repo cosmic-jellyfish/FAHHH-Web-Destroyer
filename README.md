@@ -2,9 +2,7 @@
 
 **FAHHH Boom** is a Chrome extension for when a page deserves a little… *dramatic restructuring*. Remove what you choose: use the **right-click** context menu on one element, or **Pick on page** from the toolbar popup to select targets and FAHHH them with sound, flash, and flying debris (until reload).
 
-**Chrome Web Store:** _[listing URL when live]_
-<br>
-<img width="541" height="191" alt="image" src="https://github.com/user-attachments/assets/be77d759-7e3d-4bfc-a4d2-9c7e98499940" />
+**Chrome Web Store:** https://chromewebstore.google.com/detail/fahhh-boom/mpmhcnaphidffpmjghicnijeghnamhil
 
 ---
 
